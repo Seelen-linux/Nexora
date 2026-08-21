@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dein Ubuntu-Desktop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="desktop-page">
+    <div class="topbar">
+      <div class="brand"><span>ubuntu</span><span class="brand-dot">.</span><span>host</span></div>
+      <div class="spacer"></div>
+      <div class="topbar-user">Angemeldet als <strong id="whoAmI">…</strong></div>
+      <button class="btn btn-ghost btn-sm" id="logoutBtn">Logout</button>
+    </div>
+
+    <div class="desktop-toolbar">
+      <!-- Signature-Element: echte Verbindungskette, nicht nur ein Badge -->
+      <div class="handshake" id="handshake">
+        <span class="handshake-hop" data-hop="you">Du</span>
+        <span class="handshake-sep">→</span>
+        <span class="handshake-hop" data-hop="cloudflare">Cloudflare Tunnel</span>
+        <span class="handshake-sep">→</span>
+        <span class="handshake-hop" data-hop="backend">API-Backend</span>
+        <span class="handshake-sep">→</span>
+        <span class="handshake-hop" data-hop="container">Ubuntu-Container</span>
+      </div>
+    </div>
+
+    <div class="desktop-stage" id="desktopStage">
+      <div class="desktop-overlay" id="overlayStarting">
+        <div class="spinner"></div>
+        <div>Session wird gestartet …</div>
+      </div>
+      <div class="desktop-overlay hidden" id="overlayError">
+        <div style="color: var(--danger); font-size: 20px">⚠</div>
+        <div id="overlayErrorText">Verbindung fehlgeschlagen.</div>
+        <button class="btn btn-primary" id="retryBtn">Erneut versuchen</button>
+      </div>
+      <!-- noVNC rendert sein <canvas> hier per JS hinein -->
+    </div>
+
+    <div class="session-info-bar">
+      <span>Status: <b id="statusText">verbinde …</b></span>
+      <span>Ping: <b id="pingText">–</b></span>
+      <span>Session-Dauer: <b id="durationText">00:00</b></span>
+    </div>
+  </div>
+
+  <div class="toast-stack" id="toastStack"></div>
+
+  <div class="modal-backdrop hidden" id="kickModal">
+    <div class="card modal">
+      <h3>Session beendet</h3>
+      <p id="kickModalText">Deine Session wurde von einem Administrator beendet.</p>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="kickModalOk">Zum Login</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>

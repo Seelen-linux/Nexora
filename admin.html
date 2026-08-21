@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin-Dashboard · Ubuntu Hosting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand"><span>ubuntu</span><span class="brand-dot">.</span><span>host</span></div>
+    <span class="badge" style="border-color: var(--accent-border); color: var(--accent)">ADMIN</span>
+    <div class="spacer"></div>
+    <div class="topbar-user">Angemeldet als <strong id="whoAmI">…</strong></div>
+    <button class="btn btn-ghost btn-sm" id="logoutBtn">Logout</button>
+  </div>
+
+  <div class="admin-page">
+    <div class="admin-header">
+      <h1 style="font-size: 20px; margin: 0">Nutzerübersicht</h1>
+      <span class="stat-pill" id="onlineCount">0 online</span>
+      <span class="stat-pill" id="totalCount">0 gesamt</span>
+      <div class="spacer"></div>
+      <button class="btn btn-primary btn-sm" id="newUserBtn">+ Nutzer anlegen</button>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" data-tab="users">Nutzer</div>
+      <div class="tab" data-tab="ipbans">IP-Sperren</div>
+      <div class="tab" data-tab="audit">Audit-Log</div>
+    </div>
+
+    <div id="tabUsers">
+      <div style="overflow-x: auto">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Nutzer</th>
+              <th>Status</th>
+              <th>Session-Dauer</th>
+              <th>Ping</th>
+              <th>CPU</th>
+              <th>RAM</th>
+              <th>Container</th>
+              <th>IP-Adresse</th>
+              <th>Aktionen</th>
+            </tr>
+          </thead>
+          <tbody id="usersTableBody">
+            <tr>
+              <td colspan="9" class="empty-state">Lade Nutzer …</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="tabIpbans" style="display: none">
+      <div class="card" style="padding: 20px; margin-bottom: 16px">
+        <div class="row gap-sm">
+          <input type="text" id="ipBanInput" placeholder="IP-Adresse, z.B. 203.0.113.42" style="flex:1; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 9px 12px; color: var(--text)" />
+          <input type="text" id="ipBanReason" placeholder="Grund (optional)" style="flex:1; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 9px 12px; color: var(--text)" />
+          <button class="btn btn-danger btn-sm" id="ipBanSubmit">IP sperren</button>
+        </div>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>IP-Adresse</th>
+            <th>Grund</th>
+            <th>Gesperrt seit</th>
+            <th>Aktionen</th>
+          </tr>
+        </thead>
+        <tbody id="ipBansTableBody">
+          <tr><td colspan="4" class="empty-state">Lade …</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="tabAudit" style="display: none">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Zeit</th>
+            <th>Admin</th>
+            <th>Aktion</th>
+            <th>Ziel</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody id="auditTableBody">
+          <tr><td colspan="5" class="empty-state">Lade …</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Bestätigungsdialog für destruktive Aktionen -->
+  <div class="modal-backdrop hidden" id="confirmModal">
+    <div class="card modal">
+      <h3 id="confirmTitle">Aktion bestätigen</h3>
+      <p id="confirmText">Bist du sicher?</p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="confirmCancel">Abbrechen</button>
+        <button class="btn btn-danger" id="confirmOk">Bestätigen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dialog: Nutzer anlegen -->
+  <div class="modal-backdrop hidden" id="newUserModal">
+    <div class="card modal">
+      <h3>Nutzer anlegen</h3>
+      <p>Es gibt keine öffentliche Registrierung - Accounts werden ausschließlich hier angelegt.</p>
+      <div class="field">
+        <label for="newUsername">Nutzername</label>
+        <input type="text" id="newUsername" />
+      </div>
+      <div class="field">
+        <label for="newPassword">Passwort</label>
+        <input type="password" id="newPassword" />
+      </div>
+      <div class="field" style="flex-direction: row; align-items: center; gap: 8px">
+        <input type="checkbox" id="newIsAdmin" style="width: auto" />
+        <label for="newIsAdmin" style="margin: 0">Admin-Rechte geben</label>
+      </div>
+      <div class="form-error" id="newUserError"></div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="newUserCancel">Abbrechen</button>
+        <button class="btn btn-primary" id="newUserSubmit">Anlegen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dialog: Nutzer warnen -->
+  <div class="modal-backdrop hidden" id="warnModal">
+    <div class="card modal">
+      <h3>Nutzer warnen</h3>
+      <div class="field">
+        <label for="warnMessage">Nachricht</label>
+        <input type="text" id="warnMessage" placeholder="z.B. Bitte Nutzungsregeln beachten" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="warnCancel">Abbrechen</button>
+        <button class="btn btn-primary" id="warnSubmit">Senden</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dialog: Nutzerinformationen anzeigen -->
+  <div class="modal-backdrop hidden" id="detailModal">
+    <div class="card modal">
+      <h3 id="detailTitle">Nutzerdetails</h3>
+      <div class="mono" id="detailBody" style="font-size: 12px; color: var(--text-muted); line-height: 2"></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="detailClose">Schließen</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

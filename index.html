@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ubuntu Hosting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="login-shell">
+    <!-- Linke Seite: animiertes Boot-Log als Signature-Element -->
+    <div class="boot-pane" aria-hidden="true">
+      <div class="brand" style="margin-bottom: 40px">
+        <span>ubuntu</span><span class="brand-dot">.</span><span>host</span>
+      </div>
+      <div class="boot-log" id="bootLog"></div>
+    </div>
+
+    <!-- Rechte Seite: Login -->
+    <div class="login-pane">
+      <div class="login-card-wrap">
+        <div class="brand" style="margin-bottom: 28px">
+          <span>ubuntu</span><span class="brand-dot">.</span><span>host</span>
+        </div>
+        <h1 class="login-title" id="formTitle">Anmelden</h1>
+        <p class="login-sub" id="formSub">Zugang zu deiner persönlichen Ubuntu-Desktop-Session.</p>
+
+        <div class="form-error" id="loginError"></div>
+
+        <form id="loginForm">
+          <div class="field">
+            <label for="username">Nutzername</label>
+            <input type="text" id="username" name="username" autocomplete="username" required />
+          </div>
+          <div class="field">
+            <label for="password">Passwort</label>
+            <input type="password" id="password" name="password" autocomplete="current-password" required />
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" id="loginSubmit">Anmelden</button>
+        </form>
+
+        <div class="login-footer-links">
+          <button type="button" class="btn-ghost btn" id="toggleAdminMode" style="background:none;border:none;padding:4px">
+            Admin-Login
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Donate-Sektion -->
+  <div class="donate">
+    <div class="donate-inner">
+      <h3 style="font-size: 15px; color: var(--text-muted); font-weight: 500">Donate us: LTC</h3>
+      <div class="card donate-card">
+        <div class="donate-qr" id="donateQr"></div>
+        <div style="flex: 1; min-width: 0">
+          <div style="font-size: 12px; color: var(--text-faint); margin-bottom: 4px">Litecoin-Adresse</div>
+          <div class="donate-address-row">
+            <code id="ltcAddress">LWz7JRrYuu6YNdo9oC3fqbobB3WTcEhov7</code>
+            <button class="btn btn-sm btn-ghost" id="copyAddressBtn" type="button">Kopieren</button>
+          </div>
+          <div class="copy-toast" id="copyToast">In Zwischenablage kopiert</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/vendor/qrcode.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

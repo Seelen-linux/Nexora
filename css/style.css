@@ -1,0 +1,855 @@
+/* ============================================================
+   Design-Tokens
+   Dunkles UI, Cyan-Akzent, technisch/systemnah statt generisch.
+   ============================================================ */
+:root {
+  /* Farbe */
+  --bg: #0a0e13;
+  --bg-hero: #070a0e;
+  --surface: #10161d;
+  --surface-raised: #171f28;
+  --border: #232d38;
+  --border-soft: #1a222b;
+  --text: #e7edf3;
+  --text-muted: #7a8896;
+  --text-faint: #4d5964;
+
+  --accent: #35c7f0;
+  --accent-strong: #6edcff;
+  --accent-dim: rgba(53, 199, 240, 0.12);
+  --accent-border: rgba(53, 199, 240, 0.35);
+
+  --danger: #f0555a;
+  --danger-dim: rgba(240, 85, 90, 0.12);
+  --warn: #f0b03b;
+  --warn-dim: rgba(240, 176, 59, 0.14);
+  --success: #4cd787;
+  --success-dim: rgba(76, 215, 135, 0.12);
+
+  /* Typografie */
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "IBM Plex Sans", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  /* Layout */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 18px;
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 12px 32px rgba(0, 0, 0, 0.4);
+  --max-width: 1180px;
+}
+
+/* ============================================================
+   Reset & Basis
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.5em;
+}
+
+p {
+  margin: 0 0 1em;
+  color: var(--text-muted);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--accent-strong);
+}
+
+code,
+.mono {
+  font-family: var(--font-mono);
+}
+
+::selection {
+  background: var(--accent-dim);
+  color: var(--accent-strong);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ============================================================
+   Layout-Hilfsklassen
+   ============================================================ */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.gap-sm {
+  gap: 8px;
+}
+.gap-md {
+  gap: 16px;
+}
+.gap-lg {
+  gap: 28px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+/* ============================================================
+   Marke / Logo
+   ============================================================ */
+.brand {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: -0.02em;
+}
+.brand .brand-dot {
+  color: var(--accent);
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-raised);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.1s ease, background 0.15s ease;
+}
+.btn:hover {
+  border-color: var(--text-faint);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #05131a;
+  font-weight: 600;
+}
+.btn-primary:hover {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+}
+
+.btn-danger {
+  background: transparent;
+  border-color: var(--danger-dim);
+  color: var(--danger);
+}
+.btn-danger:hover {
+  background: var(--danger-dim);
+  border-color: var(--danger);
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--text-muted);
+}
+.btn-ghost:hover {
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* ============================================================
+   Formulare
+   ============================================================ */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.field label {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.field input {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 11px 14px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  transition: border-color 0.15s ease;
+}
+.field input:focus {
+  border-color: var(--accent);
+}
+.field input::placeholder {
+  color: var(--text-faint);
+}
+
+.form-error {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  background: var(--danger-dim);
+  border: 1px solid rgba(240, 85, 90, 0.3);
+  color: var(--danger);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+.form-error.visible {
+  display: flex;
+}
+
+/* ============================================================
+   Card
+   ============================================================ */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+/* ============================================================
+   Status-Punkt (online/offline/warn/unknown)
+   ============================================================ */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-faint);
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px transparent;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+.status-dot.on {
+  background: var(--success);
+  box-shadow: 0 0 0 3px var(--success-dim);
+}
+.status-dot.off {
+  background: var(--text-faint);
+}
+.status-dot.pending {
+  background: var(--warn);
+  box-shadow: 0 0 0 3px var(--warn-dim);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+.status-dot.error {
+  background: var(--danger);
+  box-shadow: 0 0 0 3px var(--danger-dim);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* ============================================================
+   Handshake-Ribbon — Signature-Element
+   Zeigt die echte Verbindungskette: Du -> Cloudflare -> nginx
+   -> API -> Container. Jeder Hop pulst amber während er
+   aufgebaut wird und wird cyan/gruen sobald er steht.
+   ============================================================ */
+.handshake {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 12px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  overflow-x: auto;
+}
+
+.handshake-hop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px;
+  color: var(--text-faint);
+  white-space: nowrap;
+  transition: color 0.4s ease;
+}
+.handshake-hop.done {
+  color: var(--text-muted);
+}
+.handshake-hop.active {
+  color: var(--accent-strong);
+}
+
+.handshake-sep {
+  color: var(--text-faint);
+  padding: 0 2px;
+}
+.handshake-sep.done {
+  color: var(--accent-dim);
+}
+
+/* ============================================================
+   Login-Seite: Split-Screen
+   ============================================================ */
+.login-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+}
+
+@media (max-width: 880px) {
+  .login-shell {
+    grid-template-columns: 1fr;
+  }
+  .boot-pane {
+    display: none;
+  }
+}
+
+.boot-pane {
+  background: var(--bg-hero);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.boot-pane::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(600px 400px at 20% 20%, var(--accent-dim), transparent 70%);
+  pointer-events: none;
+}
+
+.boot-log {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.9;
+  color: var(--text-muted);
+  max-width: 480px;
+}
+
+.boot-log .line {
+  opacity: 0;
+  animation: boot-in 0.35s ease forwards;
+  white-space: pre-wrap;
+}
+
+.boot-log .ok {
+  color: var(--success);
+}
+.boot-log .tag {
+  color: var(--accent);
+}
+.boot-log .cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  background: var(--accent);
+  margin-left: 2px;
+  vertical-align: -2px;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes boot-in {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.login-pane {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px;
+}
+
+.login-card-wrap {
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.login-title {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+.login-sub {
+  font-size: 14px;
+  margin-bottom: 32px;
+}
+
+.login-footer-links {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  font-size: 13px;
+}
+
+/* ============================================================
+   Donate-Sektion
+   ============================================================ */
+.donate {
+  border-top: 1px solid var(--border);
+  padding: 40px 24px 56px;
+}
+
+.donate-inner {
+  max-width: 520px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.donate-card {
+  padding: 24px;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  text-align: left;
+}
+
+.donate-qr {
+  flex-shrink: 0;
+  background: #fff;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  line-height: 0;
+}
+
+.donate-address-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+}
+
+.donate-address-row code {
+  flex: 1;
+  font-size: 12px;
+  color: var(--text-muted);
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.copy-toast {
+  font-size: 12px;
+  color: var(--success);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.copy-toast.visible {
+  opacity: 1;
+}
+
+/* ============================================================
+   App-Shell (Dashboard + Admin)
+   ============================================================ */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.topbar-user {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.topbar-user strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* ============================================================
+   Desktop-Seite: noVNC-Bereich
+   ============================================================ */
+.desktop-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.desktop-toolbar {
+  padding: 10px 24px;
+}
+
+.desktop-stage {
+  flex: 1;
+  position: relative;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.desktop-stage canvas {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.desktop-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: var(--bg);
+  text-align: center;
+  padding: 24px;
+}
+
+.desktop-overlay.hidden {
+  display: none;
+}
+
+.spinner {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.session-info-bar {
+  display: flex;
+  gap: 20px;
+  padding: 10px 24px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.session-info-bar b {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Toast für Admin-Warnungen im Desktop-View */
+.toast-stack {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 50;
+}
+.toast {
+  background: var(--surface-raised);
+  border: 1px solid var(--warn-dim);
+  border-left: 3px solid var(--warn);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-size: 13px;
+  max-width: 320px;
+  box-shadow: var(--shadow-card);
+}
+
+/* ============================================================
+   Admin-Dashboard
+   ============================================================ */
+.admin-page {
+  padding: 28px 24px 60px;
+}
+
+.admin-header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-pill {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.data-table th {
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-faint);
+  font-weight: 600;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-raised);
+}
+
+.data-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-soft);
+  font-size: 13px;
+  vertical-align: middle;
+}
+.data-table tr:last-child td {
+  border-bottom: none;
+}
+.data-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.mini-bar {
+  width: 64px;
+  height: 5px;
+  background: var(--bg);
+  border-radius: 3px;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+.mini-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+.mini-bar-fill.high {
+  background: var(--danger);
+}
+.mini-bar-fill.mid {
+  background: var(--warn);
+}
+
+.metric-cell {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+.badge.running {
+  border-color: rgba(76, 215, 135, 0.35);
+  color: var(--success);
+}
+.badge.stopped {
+  border-color: var(--border);
+  color: var(--text-faint);
+}
+.badge.unknown {
+  border-color: rgba(240, 176, 59, 0.35);
+  color: var(--warn);
+}
+.badge.banned {
+  border-color: rgba(240, 85, 90, 0.35);
+  color: var(--danger);
+}
+
+.row-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* ============================================================
+   Modal (Bestätigungsdialoge für destruktive Aktionen)
+   ============================================================ */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 6, 9, 0.7);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+.modal-backdrop.hidden {
+  display: none;
+}
+
+.modal {
+  width: 100%;
+  max-width: 380px;
+  padding: 24px;
+  margin: 16px;
+}
+
+.modal h3 {
+  font-size: 17px;
+  margin-bottom: 8px;
+}
+.modal p {
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* ============================================================
+   Empty / Auth-Zustände
+   ============================================================ */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+.tab {
+  padding: 10px 16px;
+  font-size: 13px;
+  color: var(--text-muted);
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+.tab.active {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+}
