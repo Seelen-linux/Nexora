@@ -7,4 +7,4 @@
  * des Skripts Ã¼berschrieben.
  */
 
-window.UBUNTU_HOSTING_API_BASE = "https://deutsch-chronicles-refer-insight.trycloudflare.com";
+window.UBUNTU_HOSTING_API_BASE = "https://appeals-solving-libs-applicant.trycloudflare.com";
