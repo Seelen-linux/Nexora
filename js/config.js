@@ -1,10 +1,6 @@
 /*
  * Einzige Stelle, die nach dem Deployment angepasst werden muss.
- *
- * Lokaler Test (vor Cloudflare Tunnel):
- *   window.UBUNTU_HOSTING_API_BASE = "http://localhost:8000";
- *
- * Produktion (nach Setup-Schritt 6, README):
- *   window.UBUNTU_HOSTING_API_BASE = "https://api.deine-domain.example.com";
+ * WIRD AUTOMATISCH von scripts/start-tunnel-and-deploy.ps1 aktualisiert -
+ * manuelle Aenderungen hier gehen beim naechsten Skript-Lauf verloren.
  */
-   window.UBUNTU_HOSTING_API_BASE = "https://christopher-segment-sectors-laboratory.trycloudflare.com";
+window.UBUNTU_HOSTING_API_BASE = "https://packard-webpage-connectors-twenty.trycloudflare.com";
