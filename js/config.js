@@ -7,4 +7,4 @@
  * des Skripts Ã¼berschrieben.
  */
 
-window.UBUNTU_HOSTING_API_BASE = "https://closing-calibration-nicole-paid.trycloudflare.com";
+window.UBUNTU_HOSTING_API_BASE = "https://buddy-although-affordable-biol.trycloudflare.com";
