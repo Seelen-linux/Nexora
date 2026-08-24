@@ -7,4 +7,4 @@
  * des Skripts Ã¼berschrieben.
  */
 
-window.UBUNTU_HOSTING_API_BASE = "https://endless-cad-soa-duck.trycloudflare.com";
+window.UBUNTU_HOSTING_API_BASE = "https://second-lcd-department-custody.trycloudflare.com";
