@@ -10,4 +10,4 @@
  * Start des Skripts Ã¼berschrieben.
  */
 
-window.UBUNTU_HOSTING_API_BASE = "https://miss-clusters-doug-recommends.trycloudflare.com";
+window.UBUNTU_HOSTING_API_BASE = "https://dozen-hiring-lan-twelve.trycloudflare.com";
