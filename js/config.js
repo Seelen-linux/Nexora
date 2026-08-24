@@ -7,4 +7,4 @@
  * des Skripts Ã¼berschrieben.
  */
 
-window.UBUNTU_HOSTING_API_BASE = "https://route-estimate-compromise-cooper.trycloudflare.com";
+window.UBUNTU_HOSTING_API_BASE = "https://handbags-gods-fabrics-week.trycloudflare.com";
