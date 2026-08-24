@@ -1,6 +1,13 @@
 /*
- * Einzige Stelle, die nach dem Deployment angepasst werden muss.
- * WIRD AUTOMATISCH von scripts/start-tunnel-and-deploy.ps1 aktualisiert -
- * manuelle Aenderungen hier gehen beim naechsten Skript-Lauf verloren.
+ * AUTOMATISCH GENERIERT
+ *
+ * Diese Datei wird von:
+ * scripts/start-tunnel-and-deploy.ps1
+ *
+ * automatisch aktualisiert.
+ *
+ * Manuelle Ã„nderungen werden beim nÃ¤chsten
+ * Start des Skripts Ã¼berschrieben.
  */
-window.UBUNTU_HOSTING_API_BASE = "https://pillow-seal-meters-institutions.trycloudflare.com";
+
+window.UBUNTU_HOSTING_API_BASE = "https://miss-clusters-doug-recommends.trycloudflare.com";
