@@ -7,4 +7,4 @@
  * des Skripts Ã¼berschrieben.
  */
 
-window.UBUNTU_HOSTING_API_BASE = "https://prompt-prototype-ant-featuring.trycloudflare.com";
+window.UBUNTU_HOSTING_API_BASE = "https://request-province-landscapes-tactics.trycloudflare.com";
