@@ -7,4 +7,4 @@
  * des Skripts Ã¼berschrieben.
  */
 
-window.UBUNTU_HOSTING_API_BASE = "https://mitchell-incurred-strongly-internship.trycloudflare.com";
+window.UBUNTU_HOSTING_API_BASE = "https://gym-cindy-fig-wanna.trycloudflare.com";
