@@ -7,4 +7,4 @@
  * des Skripts Ã¼berschrieben.
  */
 
-window.UBUNTU_HOSTING_API_BASE = "https://sandwich-prep-strengthen-wolf.trycloudflare.com";
+window.UBUNTU_HOSTING_API_BASE = "https://sponsorship-henderson-ash-pest.trycloudflare.com";
