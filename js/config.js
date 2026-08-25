@@ -7,4 +7,4 @@
  * des Skripts Ã¼berschrieben.
  */
 
-window.UBUNTU_HOSTING_API_BASE = "https://statement-poll-carter-alphabetical.trycloudflare.com";
+window.UBUNTU_HOSTING_API_BASE = "https://bond-lightbox-westminster-tier.trycloudflare.com";
