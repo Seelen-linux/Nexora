@@ -1,6 +1,7 @@
 const usersTableBody = document.getElementById("usersTableBody");
 const ipBansTableBody = document.getElementById("ipBansTableBody");
 const auditTableBody = document.getElementById("auditTableBody");
+const emailsTableBody = document.getElementById("emailsTableBody");
 const onlineCount = document.getElementById("onlineCount");
 const totalCount = document.getElementById("totalCount");
 const whoAmI = document.getElementById("whoAmI");
@@ -38,8 +39,10 @@ document.querySelectorAll(".tab").forEach((tab) => {
     document.querySelectorAll(".tab").forEach((t) => t.classList.remove("active"));
     tab.classList.add("active");
     document.getElementById("tabUsers").style.display = tab.dataset.tab === "users" ? "" : "none";
+    document.getElementById("tabEmails").style.display = tab.dataset.tab === "emails" ? "" : "none";
     document.getElementById("tabIpbans").style.display = tab.dataset.tab === "ipbans" ? "" : "none";
     document.getElementById("tabAudit").style.display = tab.dataset.tab === "audit" ? "" : "none";
+    if (tab.dataset.tab === "emails") loadEmails();
     if (tab.dataset.tab === "ipbans") loadIpBans();
     if (tab.dataset.tab === "audit") loadAuditLog();
   });
@@ -125,6 +128,7 @@ function renderUsers(users) {
                   ? '<button class="btn btn-sm btn-ghost" data-action="unban">Entsperren</button>'
                   : '<button class="btn btn-sm btn-danger" data-action="ban">Bannen</button>'
               }
+              <button class="btn btn-sm btn-danger" data-action="delete">Löschen</button>
             </div>
           </td>
         </tr>`;
@@ -149,7 +153,7 @@ usersTableBody.addEventListener("click", async (e) => {
   const username = row.dataset.username;
   const action = btn.dataset.action;
 
-  if (username === currentAdminUsername && (action === "kick" || action === "ban")) {
+  if (username === currentAdminUsername && (action === "kick" || action === "ban" || action === "delete")) {
     alert("Du kannst diese Aktion nicht auf deinen eigenen Account anwenden.");
     return;
   }
@@ -213,6 +217,18 @@ usersTableBody.addEventListener("click", async (e) => {
     });
     return;
   }
+
+  if (action === "delete") {
+    askConfirm(
+      "Nutzer endgültig löschen?",
+      `${username} wird komplett gelöscht - inklusive Ubuntu-Container UND dem gespeicherten Home-Verzeichnis. Das kann NICHT rückgängig gemacht werden.`,
+      async () => {
+        await Api.adminDeleteUser(username);
+        loadUsers();
+      }
+    );
+    return;
+  }
 });
 
 /* ---------- Warn-Modal ---------- */
@@ -241,6 +257,7 @@ const newUserModal = document.getElementById("newUserModal");
 document.getElementById("newUserBtn").addEventListener("click", () => {
   document.getElementById("newUsername").value = "";
   document.getElementById("newPassword").value = "";
+  document.getElementById("newEmail").value = "";
   document.getElementById("newIsAdmin").checked = false;
   document.getElementById("newUserError").classList.remove("visible");
   newUserModal.classList.remove("hidden");
@@ -249,15 +266,99 @@ document.getElementById("newUserCancel").addEventListener("click", () => newUser
 document.getElementById("newUserSubmit").addEventListener("click", async () => {
   const username = document.getElementById("newUsername").value.trim();
   const password = document.getElementById("newPassword").value;
+  const email = document.getElementById("newEmail").value.trim();
   const isAdmin = document.getElementById("newIsAdmin").checked;
   const errorBox = document.getElementById("newUserError");
   try {
-    await Api.adminCreateUser(username, password, isAdmin);
+    const result = await Api.adminCreateUser(username, password, isAdmin, email);
     newUserModal.classList.add("hidden");
+    if (email) {
+      if (result.email_sent) {
+        alert(`Nutzer angelegt. Zugangsdaten wurden an ${email} verschickt.`);
+      } else {
+        alert(
+          `Nutzer angelegt, aber die E-Mail konnte NICHT verschickt werden:\n${result.email_error || "unbekannter Fehler"}\n\nPrüfe die SMTP-Einstellungen in der .env.`
+        );
+      }
+    }
     loadUsers();
   } catch (err) {
     errorBox.textContent = err.message;
     errorBox.classList.add("visible");
+  }
+});
+
+/* ---------- E-Mails-Tab ---------- */
+async function loadEmails() {
+  try {
+    const users = await Api.adminListUsers();
+    if (users.length === 0) {
+      emailsTableBody.innerHTML = `<tr><td colspan="3" class="empty-state">Keine Nutzer angelegt.</td></tr>`;
+      return;
+    }
+    emailsTableBody.innerHTML = users
+      .map(
+        (u) => `
+        <tr data-username="${u.username}">
+          <td class="user-cell">${u.username}</td>
+          <td class="metric-cell">${u.email || "kein E-Mail hinterlegt"}</td>
+          <td>
+            <div class="row-actions">
+              <button class="btn btn-sm btn-ghost" data-email-action="set">${u.email ? "Ändern" : "Setzen"}</button>
+              <button class="btn btn-sm btn-danger" data-email-action="reset" ${u.email ? "" : "disabled"}>Neues Passwort senden</button>
+            </div>
+          </td>
+        </tr>`
+      )
+      .join("");
+  } catch (err) {
+    emailsTableBody.innerHTML = `<tr><td colspan="3" class="empty-state">Fehler: ${err.message}</td></tr>`;
+  }
+}
+
+const emailModal = document.getElementById("emailModal");
+emailsTableBody.addEventListener("click", async (e) => {
+  const btn = e.target.closest("button[data-email-action]");
+  if (!btn) return;
+  const row = e.target.closest("tr");
+  const username = row.dataset.username;
+  const action = btn.dataset.emailAction;
+
+  if (action === "set") {
+    document.getElementById("emailModalInput").value = "";
+    emailModal.dataset.target = username;
+    emailModal.classList.remove("hidden");
+    return;
+  }
+
+  if (action === "reset") {
+    askConfirm(
+      "Neues Passwort per Mail senden?",
+      `${username} bekommt ein neu erzeugtes Passwort per E-Mail zugeschickt. Das alte Passwort wird ungültig.`,
+      async () => {
+        const result = await Api.adminResetPassword(username);
+        if (result.email_sent) {
+          alert("Neues Passwort wurde verschickt.");
+        } else {
+          alert(`Passwort wurde zurückgesetzt, aber die E-Mail konnte NICHT verschickt werden:\n${result.email_error || "unbekannter Fehler"}`);
+        }
+      }
+    );
+    return;
+  }
+});
+
+document.getElementById("emailModalCancel").addEventListener("click", () => emailModal.classList.add("hidden"));
+document.getElementById("emailModalSubmit").addEventListener("click", async () => {
+  const username = emailModal.dataset.target;
+  const email = document.getElementById("emailModalInput").value.trim();
+  if (!email) return;
+  try {
+    await Api.adminSetEmail(username, email);
+    emailModal.classList.add("hidden");
+    loadEmails();
+  } catch (err) {
+    alert("Fehler: " + err.message);
   }
 });
 
@@ -341,3 +442,4 @@ async function loadAuditLog() {
   await loadUsers();
   pollTimer = setInterval(loadUsers, 4000);
 })();
+
