@@ -7,4 +7,4 @@
  * des Skripts Ã¼berschrieben.
  */
 
-window.UBUNTU_HOSTING_API_BASE = "https://impacts-def-chrome-cricket.trycloudflare.com";
+window.UBUNTU_HOSTING_API_BASE = "https://displaying-brilliant-chassis-alex.trycloudflare.com";
