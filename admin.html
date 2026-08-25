@@ -32,6 +32,7 @@
 
     <div class="tabs">
       <div class="tab active" data-tab="users">Nutzer</div>
+      <div class="tab" data-tab="emails">E-Mails</div>
       <div class="tab" data-tab="ipbans">IP-Sperren</div>
       <div class="tab" data-tab="audit">Audit-Log</div>
     </div>
@@ -59,6 +60,21 @@
           </tbody>
         </table>
       </div>
+    </div>
+
+    <div id="tabEmails" style="display: none">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Nutzer</th>
+            <th>E-Mail</th>
+            <th>Aktionen</th>
+          </tr>
+        </thead>
+        <tbody id="emailsTableBody">
+          <tr><td colspan="3" class="empty-state">Lade …</td></tr>
+        </tbody>
+      </table>
     </div>
 
     <div id="tabIpbans" style="display: none">
@@ -127,6 +143,10 @@
         <label for="newPassword">Passwort</label>
         <input type="password" id="newPassword" />
       </div>
+      <div class="field">
+        <label for="newEmail">E-Mail senden an? (optional)</label>
+        <input type="email" id="newEmail" placeholder="nutzer@example.com" />
+      </div>
       <div class="field" style="flex-direction: row; align-items: center; gap: 8px">
         <input type="checkbox" id="newIsAdmin" style="width: auto" />
         <label for="newIsAdmin" style="margin: 0">Admin-Rechte geben</label>
@@ -161,6 +181,21 @@
       <div class="mono" id="detailBody" style="font-size: 12px; color: var(--text-muted); line-height: 2"></div>
       <div class="modal-actions">
         <button class="btn btn-primary" id="detailClose">Schließen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dialog: E-Mail setzen/ändern -->
+  <div class="modal-backdrop hidden" id="emailModal">
+    <div class="card modal">
+      <h3>E-Mail setzen</h3>
+      <div class="field">
+        <label for="emailModalInput">E-Mail-Adresse</label>
+        <input type="email" id="emailModalInput" placeholder="nutzer@example.com" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="emailModalCancel">Abbrechen</button>
+        <button class="btn btn-primary" id="emailModalSubmit">Speichern</button>
       </div>
     </div>
   </div>
