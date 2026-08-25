@@ -7,4 +7,4 @@
  * des Skripts Ã¼berschrieben.
  */
 
-window.UBUNTU_HOSTING_API_BASE = "https://sys-hats-velvet-mode.trycloudflare.com";
+window.UBUNTU_HOSTING_API_BASE = "https://superior-tested-armstrong-bags.trycloudflare.com";
