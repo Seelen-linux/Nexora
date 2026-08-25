@@ -7,4 +7,4 @@
  * des Skripts Ã¼berschrieben.
  */
 
-window.UBUNTU_HOSTING_API_BASE = "https://sponsorship-henderson-ash-pest.trycloudflare.com";
+window.UBUNTU_HOSTING_API_BASE = "https://prompt-prototype-ant-featuring.trycloudflare.com";
