@@ -49,11 +49,20 @@ const Api = {
   sessionStatus: () => apiFetch("/api/session/status"),
 
   adminListUsers: () => apiFetch("/api/admin/users"),
-  adminCreateUser: (username, password, isAdmin) =>
+  adminCreateUser: (username, password, isAdmin, email) =>
     apiFetch("/api/admin/users", {
       method: "POST",
-      body: JSON.stringify({ username, password, is_admin: isAdmin }),
+      body: JSON.stringify({ username, password, is_admin: isAdmin, email: email || null }),
     }),
+  adminDeleteUser: (username) =>
+    apiFetch(`/api/admin/users/${encodeURIComponent(username)}`, { method: "DELETE" }),
+  adminSetEmail: (username, email) =>
+    apiFetch(`/api/admin/users/${encodeURIComponent(username)}/email`, {
+      method: "POST",
+      body: JSON.stringify({ email }),
+    }),
+  adminResetPassword: (username) =>
+    apiFetch(`/api/admin/users/${encodeURIComponent(username)}/reset-password`, { method: "POST" }),
   adminKick: (username) => apiFetch(`/api/admin/users/${encodeURIComponent(username)}/kick`, { method: "POST" }),
   adminStopSession: (username) =>
     apiFetch(`/api/admin/users/${encodeURIComponent(username)}/stop-session`, { method: "POST" }),
