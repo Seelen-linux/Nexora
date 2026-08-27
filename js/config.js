@@ -7,4 +7,4 @@
  * des Skripts Ã¼berschrieben.
  */
 
-window.UBUNTU_HOSTING_API_BASE = "https://maui-assumed-subsidiary-effectively.trycloudflare.com";
+window.UBUNTU_HOSTING_API_BASE = "https://inserted-territory-republic-combine.trycloudflare.com";
