@@ -7,4 +7,4 @@
  * des Skripts Ã¼berschrieben.
  */
 
-window.UBUNTU_HOSTING_API_BASE = "https://inserted-territory-republic-combine.trycloudflare.com";
+window.UBUNTU_HOSTING_API_BASE = "https://showing-visible-adventures-dad.trycloudflare.com";
